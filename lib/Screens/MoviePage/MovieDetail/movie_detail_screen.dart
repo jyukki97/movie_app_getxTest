@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_test/Model/movie.dart';
 import 'package:infinite_scroll_test/constants.dart';
@@ -18,8 +19,10 @@ class MovieDetailScreen extends StatelessWidget {
         .size
         .height * 0.4;
     List<Widget> stars = [];
-    for (var i =0;i<movie.rating.toInt();i+=2) stars.add(Icon(Icons.star, color: orangeColor, size: 30,));
-    while(stars.length != 5) stars.add(Icon(Icons.star, color: greyColor, size: 30,));
+    for (var i = 0; i < movie.rating.toInt(); i += 2)
+      stars.add(Icon(Icons.star, color: orangeColor, size: 30,));
+    while (stars.length != 5) stars.add(
+        Icon(Icons.star, color: greyColor, size: 30,));
 
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +56,7 @@ class MovieDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 135,
+                  width: 150,
                   height: boxHeight - (MediaQuery
                       .of(context)
                       .padding
@@ -117,9 +120,9 @@ class MovieDetailScreen extends StatelessWidget {
                     Text(
                       movie.rating.toString(),
                       style: TextStyle(
-                          fontSize: 25,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
-                          color: orangeColor,
+                        color: orangeColor,
                       ),
                     ),
                     Text(
@@ -129,7 +132,8 @@ class MovieDetailScreen extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    Icon(Icons.download_for_offline_outlined, color: greyColor,),
+                    Icon(
+                      Icons.download_for_offline_outlined, color: greyColor,),
                     SizedBox(width: 15,),
                     Icon(Icons.star_border_outlined, color: greyColor),
                     SizedBox(width: 15,),
@@ -138,9 +142,30 @@ class MovieDetailScreen extends StatelessWidget {
                 SizedBox(height: 5,),
                 Text(
                   movie.summary,
+                  maxLines: 6,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: Colors.black.withOpacity(0.6),
-                    height: 1.5
+                      height: 1.5
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  height: 200,
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  child: ListView.builder(
+                    scrollDirection:  Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          width: 130,
+                          height: 10,
+                          margin: EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.8),
+                          ),
+                        );
+                      }
                   ),
                 )
               ],
